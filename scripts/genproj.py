@@ -247,7 +247,7 @@ target_common = """\t\t\t\tASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 \t\t\t\tINFOPLIST_KEY_CFBundleDisplayName = MarkDone;
 \t\t\t\tINFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 \t\t\t\tINFOPLIST_KEY_NSHumanReadableCopyright = "";
-\t\t\t\tMARKETING_VERSION = 0.2.0;
+\t\t\t\tMARKETING_VERSION = 0.2.1;
 \t\t\t\tPRODUCT_BUNDLE_IDENTIFIER = com.codefiworks.MarkDone;
 \t\t\t\tPRODUCT_NAME = "$(TARGET_NAME)";
 \t\t\t\tSWIFT_EMIT_LOC_STRINGS = YES;

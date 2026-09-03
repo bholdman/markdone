@@ -7,26 +7,23 @@ struct MarkDoneApp: App {
 
     var body: some Scene {
         Window("MarkDone", id: "main") {
-            RootView(store: store)
-                .onAppear { appDelegate.store = store }
+            MainWindowContent(store: store, appDelegate: appDelegate)
         }
         .windowToolbarStyle(.unified(showsTitle: false))
         .commands { menuCommands }
 
         MenuBarExtra("MarkDone", image: "MenubarIcon") {
-            Button("New Document") { activate(); store.newDocument() }
+            Button("New Document") { appDelegate.summon { $0.newDocument() } }
                 .keyboardShortcut("m", modifiers: [.option, .command])
-            Button("New from Clipboard") { activate(); store.newFromClipboard() }
+            Button("New from Clipboard") { appDelegate.summon { $0.newFromClipboard() } }
                 .keyboardShortcut("v", modifiers: [.option, .command])
             Divider()
-            Button("Open…") { activate(); store.open() }
+            Button("Open…") { appDelegate.summon { $0.open() } }
             Divider()
             Button("Quit MarkDone") { NSApp.terminate(nil) }
                 .keyboardShortcut("q")
         }
     }
-
-    private func activate() { NSApp.activate(ignoringOtherApps: true) }
 
     @CommandsBuilder
     private var menuCommands: some Commands {
@@ -72,19 +69,66 @@ struct MarkDoneApp: App {
     }
 }
 
+/// Hosts RootView inside the main window and hands the app delegate the two
+/// things it can't reach on its own: the document store and SwiftUI's
+/// `openWindow` action (needed to bring the window back after it's closed).
+private struct MainWindowContent: View {
+    @ObservedObject var store: DocumentStore
+    let appDelegate: AppDelegate
+    @Environment(\.openWindow) private var openWindow
+
+    var body: some View {
+        RootView(store: store)
+            .onAppear {
+                appDelegate.store = store
+                appDelegate.openMainWindow = { openWindow(id: "main") }
+            }
+    }
+}
+
 /// App lifecycle: register global hotkeys and seed an initial document.
 final class AppDelegate: NSObject, NSApplicationDelegate {
     /// Assigned once the SwiftUI window appears; flushes any files that
     /// Launch Services asked us to open before then.
     weak var store: DocumentStore? { didSet { flushPendingOpens() } }
+    /// SwiftUI's `openWindow(id: "main")`, captured from the window content.
+    /// Reopens the window if the user closed it; just fronts it otherwise.
+    var openMainWindow: (() -> Void)?
     private var pendingURLs: [URL] = []
     private var didOpenFile = false
+
+    /// Bring MarkDone to the front with its main window visible. Safe to call
+    /// from a global hotkey or the menu bar while another app is active, and
+    /// when the window has been closed (the app stays resident in the menu bar).
+    func showMainWindow() {
+        // `activate(ignoringOtherApps:)` is deprecated on macOS 14 and frequently
+        // does nothing when another app is frontmost; the new API cooperates with
+        // the system's activation rules and works from a hotkey.
+        NSApp.activate()
+        openMainWindow?()
+        DispatchQueue.main.async {
+            NSApp.activate()
+            let main = NSApp.windows.first { $0.identifier?.rawValue.hasPrefix("main") == true }
+                ?? NSApp.windows.first { $0.canBecomeMain && $0.title == "MarkDone" }
+            main?.makeKeyAndOrderFront(nil)
+        }
+    }
+
+    /// Show the window, then run `action` against the store once the window's
+    /// views exist so a new document lands in a visible, focusable editor.
+    func summon(_ action: @escaping (DocumentStore) -> Void) {
+        showMainWindow()
+        DispatchQueue.main.async { [weak self] in
+            guard let store = self?.store else { return }
+            MainActor.assumeIsolated { action(store) }
+        }
+    }
 
     /// Files opened via Finder double-click, "Open With", the Dock icon, or the
     /// app being the default handler for .md all arrive here.
     func application(_ application: NSApplication, open urls: [URL]) {
         didOpenFile = true
-        NSApp.activate(ignoringOtherApps: true)
+        showMainWindow()
         if let store {
             MainActor.assumeIsolated { store.openFiles(urls) }
         } else {
@@ -101,14 +145,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         HotKeyManager.shared.registerDefaults(
-            newDocument: { [weak self] in
-                NSApp.activate(ignoringOtherApps: true)
-                self?.store?.newDocument()
-            },
-            newFromClipboard: { [weak self] in
-                NSApp.activate(ignoringOtherApps: true)
-                self?.store?.newFromClipboard()
-            }
+            newDocument: { [weak self] in self?.summon { $0.newDocument() } },
+            newFromClipboard: { [weak self] in self?.summon { $0.newFromClipboard() } }
         )
         // Start with an empty document ready to type or paste into — unless we
         // were launched to open a file (don't shove an empty tab in front of it).

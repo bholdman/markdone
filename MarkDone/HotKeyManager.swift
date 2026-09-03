@@ -66,9 +66,6 @@ final class HotKeyManager {
 
     private func fire(id: UInt32) {
         guard let action = handlers[id] else { return }
-        DispatchQueue.main.async {
-            NSApp.activate(ignoringOtherApps: true)
-            action()
-        }
+        DispatchQueue.main.async { action() }
     }
 }
