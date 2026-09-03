@@ -154,9 +154,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Menu bar status item
 
     // An AppKit NSStatusItem rather than SwiftUI's MenuBarExtra so we can tell
-    // clicks apart: a plain click shows the app, right-click (or ⌃-click) opens
-    // the quick-actions menu. MenuBarExtra opens the menu on every click.
+    // clicks apart: a single click (or right-click) opens the quick-actions menu,
+    // a double-click shows the app. MenuBarExtra can't distinguish these.
     private var statusItem: NSStatusItem?
+    /// Menu presentation deferred by one double-click interval after a single
+    /// left click, so a second click can cancel it and show the app instead.
+    private var pendingMenu: DispatchWorkItem?
 
     private func installStatusItem() {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
@@ -164,7 +167,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             let image = NSImage(named: "MenubarIcon")
             image?.isTemplate = true
             button.image = image
-            button.toolTip = "MarkDone — click to show, right-click for actions"
+            button.toolTip = "MarkDone — click for actions, double-click to show"
             button.target = self
             button.action = #selector(statusItemClicked(_:))
             button.sendAction(on: [.leftMouseUp, .rightMouseUp])
@@ -192,18 +195,33 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func statusItemClicked(_ sender: NSStatusBarButton) {
-        let event = NSApp.currentEvent
-        let wantsMenu = event?.type == .rightMouseUp
-            || event?.modifierFlags.contains(.control) == true
-        if wantsMenu {
-            // Attach the menu only for the duration of this click so the next
-            // plain click comes back to us as an action rather than a menu.
-            statusItem?.menu = makeStatusMenu()
-            sender.performClick(nil)
-            statusItem?.menu = nil
-        } else {
+        guard let event = NSApp.currentEvent else { return }
+        pendingMenu?.cancel()
+        pendingMenu = nil
+
+        let isSecondary = event.type == .rightMouseUp || event.modifierFlags.contains(.control)
+        if isSecondary {
+            showStatusMenu(from: sender)
+        } else if event.clickCount >= 2 {
             showMainWindow()
+        } else {
+            // Single left click: open the menu unless a second click arrives first.
+            let work = DispatchWorkItem { [weak self, weak sender] in
+                guard let self, let sender else { return }
+                self.pendingMenu = nil
+                self.showStatusMenu(from: sender)
+            }
+            pendingMenu = work
+            DispatchQueue.main.asyncAfter(deadline: .now() + NSEvent.doubleClickInterval, execute: work)
         }
+    }
+
+    private func showStatusMenu(from button: NSStatusBarButton) {
+        // Attach the menu only for the duration of this presentation so later
+        // clicks come back to us as actions rather than opening it directly.
+        statusItem?.menu = makeStatusMenu()
+        button.performClick(nil)
+        statusItem?.menu = nil
     }
 
     @objc private func menuShow() { showMainWindow() }
