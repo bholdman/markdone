@@ -42,12 +42,12 @@ I have no SwiftUI experience. The code in this repo is **100% AI-written**, with
 | Save / Save As… | ⌘S / ⇧⌘S | In app |
 | Editor / Split / Preview | ⌘1 / ⌘2 / ⌘3 | In app |
 
-There's also a menu bar icon with the same quick actions. The app stays resident in the menu bar after you close the window, so the global hotkeys keep working.
+There's also a menu bar icon: click it to show MarkDone, right-click it for the same quick actions. The app stays resident in the menu bar after you close the window, so the icon and global hotkeys keep working.
 
 ## Features
 
 ### Capture
-- Menu bar presence + system-wide hotkeys (Carbon Hot Key API — no Accessibility permission needed)
+- Menu bar icon (click to show, right-click for actions) + system-wide hotkeys (Carbon Hot Key API — no Accessibility permission needed)
 - "New from clipboard" for the paste-and-go workflow
 - Welcome screen with quick actions when no document is open
 - Smart Save: suggests a filename from the first `# heading`
@@ -74,7 +74,7 @@ There's also a menu bar icon with the same quick actions. The app stays resident
 
 Download the latest `.dmg` from the [Releases page](https://github.com/bholdman/markdone/releases/latest), open it, and drag MarkDone to Applications. Builds are signed and notarized, so there's no Gatekeeper prompt.
 
-On first launch MarkDone opens an empty document and adds an icon to the menu bar. Closing the window leaves the app running in the menu bar so the global hotkeys keep working; quit from the menu bar icon or with ⌘Q.
+On first launch MarkDone opens an empty document and adds an icon to the menu bar. Closing the window leaves the app running in the menu bar; click the icon or press a hotkey to bring it back. Quit from the icon's right-click menu or with ⌘Q.
 
 To make MarkDone the default app for Markdown files, right-click any `.md` file in Finder, choose **Get Info → Open with → MarkDone**, then **Change All…**. (On a fresh Mac with no other Markdown app installed, it becomes the default automatically.)
 

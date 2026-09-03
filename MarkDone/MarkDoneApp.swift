@@ -12,17 +12,6 @@ struct MarkDoneApp: App {
         .windowToolbarStyle(.unified(showsTitle: false))
         .commands { menuCommands }
 
-        MenuBarExtra("MarkDone", image: "MenubarIcon") {
-            Button("New Document") { appDelegate.summon { $0.newDocument() } }
-                .keyboardShortcut("m", modifiers: [.option, .command])
-            Button("New from Clipboard") { appDelegate.summon { $0.newFromClipboard() } }
-                .keyboardShortcut("v", modifiers: [.option, .command])
-            Divider()
-            Button("Open…") { appDelegate.summon { $0.open() } }
-            Divider()
-            Button("Quit MarkDone") { NSApp.terminate(nil) }
-                .keyboardShortcut("q")
-        }
     }
 
     @CommandsBuilder
@@ -116,7 +105,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Show the window, then run `action` against the store once the window's
     /// views exist so a new document lands in a visible, focusable editor.
-    func summon(_ action: @escaping (DocumentStore) -> Void) {
+    func summon(_ action: @escaping @MainActor (DocumentStore) -> Void) {
         showMainWindow()
         DispatchQueue.main.async { [weak self] in
             guard let store = self?.store else { return }
@@ -144,6 +133,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        installStatusItem()
         HotKeyManager.shared.registerDefaults(
             newDocument: { [weak self] in self?.summon { $0.newDocument() } },
             newFromClipboard: { [weak self] in self?.summon { $0.newFromClipboard() } }
@@ -160,4 +150,65 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         false // stay resident in the menu bar
     }
+
+    // MARK: - Menu bar status item
+
+    // An AppKit NSStatusItem rather than SwiftUI's MenuBarExtra so we can tell
+    // clicks apart: a plain click shows the app, right-click (or ⌃-click) opens
+    // the quick-actions menu. MenuBarExtra opens the menu on every click.
+    private var statusItem: NSStatusItem?
+
+    private func installStatusItem() {
+        let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        if let button = item.button {
+            let image = NSImage(named: "MenubarIcon")
+            image?.isTemplate = true
+            button.image = image
+            button.toolTip = "MarkDone — click to show, right-click for actions"
+            button.target = self
+            button.action = #selector(statusItemClicked(_:))
+            button.sendAction(on: [.leftMouseUp, .rightMouseUp])
+        }
+        statusItem = item
+    }
+
+    private func makeStatusMenu() -> NSMenu {
+        let menu = NSMenu()
+        func add(_ title: String, _ action: Selector, key: String = "", mods: NSEvent.ModifierFlags = []) {
+            let mi = NSMenuItem(title: title, action: action, keyEquivalent: key)
+            mi.keyEquivalentModifierMask = mods
+            mi.target = self
+            menu.addItem(mi)
+        }
+        add("Show MarkDone", #selector(menuShow))
+        menu.addItem(.separator())
+        // Key equivalents here are labels only; the Carbon hotkeys do the work.
+        add("New Document", #selector(menuNewDocument), key: "m", mods: [.option, .command])
+        add("New from Clipboard", #selector(menuNewFromClipboard), key: "v", mods: [.option, .command])
+        add("Open…", #selector(menuOpen), key: "o", mods: [.command])
+        menu.addItem(.separator())
+        add("Quit MarkDone", #selector(menuQuit), key: "q", mods: [.command])
+        return menu
+    }
+
+    @objc private func statusItemClicked(_ sender: NSStatusBarButton) {
+        let event = NSApp.currentEvent
+        let wantsMenu = event?.type == .rightMouseUp
+            || event?.modifierFlags.contains(.control) == true
+        if wantsMenu {
+            // Attach the menu only for the duration of this click so the next
+            // plain click comes back to us as an action rather than a menu.
+            statusItem?.menu = makeStatusMenu()
+            sender.performClick(nil)
+            statusItem?.menu = nil
+        } else {
+            showMainWindow()
+        }
+    }
+
+    @objc private func menuShow() { showMainWindow() }
+    @objc private func menuNewDocument() { summon { $0.newDocument() } }
+    @objc private func menuNewFromClipboard() { summon { $0.newFromClipboard() } }
+    @objc private func menuOpen() { summon { $0.open() } }
+    @objc private func menuQuit() { NSApp.terminate(nil) }
 }
