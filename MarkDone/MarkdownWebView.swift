@@ -138,6 +138,7 @@ struct MarkdownWebView: NSViewRepresentable {
             // listener from firing on programmatic DOM updates.
             var internalEdit = false;
             window.render = function (md) {
+              clearHighlight(); // ranges from the old DOM must not linger
               internalEdit = true;
               content.innerHTML = (typeof marked !== 'undefined') ? marked.parse(md || '') : (md || '');
               highlightAll();
@@ -183,11 +184,22 @@ struct MarkdownWebView: NSViewRepresentable {
             });
             function escapeRe(s){ return s.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }
             var canHL = (typeof CSS !== 'undefined' && CSS.highlights && typeof Highlight !== 'undefined');
+            // One persistent Highlight that we mutate in place. Deleting and
+            // re-creating the registry entry leaves stale paint behind in WebKit
+            // (old ranges kept showing after the editor selection moved or cleared).
+            var syncHL = canHL ? new Highlight() : null;
+            if (canHL) CSS.highlights.set('sync', syncHL);
+            function clearHighlight() {
+              if (!canHL) { return; }
+              syncHL.clear();
+              // Nudge a repaint of the highlighted text so cleared ranges disappear.
+              content.classList.toggle('hl-tick');
+            }
             // Mirror the editor's selection: find the (whitespace-flexible) text and
             // highlight it via the CSS Custom Highlight API so it shows even when the
             // preview isn't focused. Markdown syntax is stripped to match rendered text.
             window.highlightText = function (str) {
-              if (canHL) CSS.highlights.delete('sync');
+              clearHighlight();
               if (!str) return;
               var cleaned = str.replace(/[*_`~]/g, '')
                                .replace(/^#{1,6}\\s+/gm, '')
@@ -212,7 +224,7 @@ struct MarkdownWebView: NSViewRepresentable {
               try {
                 var range = document.createRange();
                 range.setStart(s[0], s[1]); range.setEnd(e[0], e[1]);
-                if (canHL) { CSS.highlights.set('sync', new Highlight(range)); }
+                if (canHL) { syncHL.add(range); content.classList.toggle('hl-tick'); }
                 else {
                   var sel = window.getSelection();
                   suppressSel = true; sel.removeAllRanges(); sel.addRange(range);
