@@ -1,0 +1,19 @@
+# Build output
+build/
+build-release/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# Release artifacts (published via GitHub Releases, not committed)
+dist/
+
+# macOS
+.DS_Store
+
+# Editor / tool state
+.claude/
+*.sb-*
+
+# Local-only notes (not part of the app)
+/sample.md

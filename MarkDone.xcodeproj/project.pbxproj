@@ -1,0 +1,321 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		000000000000000000000016 /* MarkDoneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000001 /* MarkDoneApp.swift */; };
+		000000000000000000000017 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000002 /* Theme.swift */; };
+		000000000000000000000018 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000003 /* Document.swift */; };
+		000000000000000000000019 /* DocumentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000004 /* DocumentStore.swift */; };
+		00000000000000000000001A /* SyncModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000005 /* SyncModel.swift */; };
+		00000000000000000000001B /* HotKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000006 /* HotKeyManager.swift */; };
+		00000000000000000000001C /* MarkdownWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000007 /* MarkdownWebView.swift */; };
+		00000000000000000000001D /* CodeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000008 /* CodeEditorView.swift */; };
+		00000000000000000000001E /* EditorPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000009 /* EditorPane.swift */; };
+		00000000000000000000001F /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000A /* TabBarView.swift */; };
+		000000000000000000000020 /* StatusBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000B /* StatusBarView.swift */; };
+		000000000000000000000021 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000C /* RootView.swift */; };
+		000000000000000000000022 /* marked.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000D /* marked.min.js */; };
+		000000000000000000000023 /* highlight.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000E /* highlight.min.js */; };
+		000000000000000000000024 /* turndown.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000F /* turndown.min.js */; };
+		000000000000000000000025 /* turndown-plugin-gfm.js in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000010 /* turndown-plugin-gfm.js */; };
+		000000000000000000000026 /* github-markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000011 /* github-markdown.css */; };
+		000000000000000000000027 /* hl-github.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000012 /* hl-github.min.css */; };
+		000000000000000000000028 /* hl-github-dark.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000013 /* hl-github-dark.min.css */; };
+		000000000000000000000029 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000014 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		000000000000000000000030 /* MarkDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarkDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000000001 /* MarkDoneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarkDoneApp.swift"; sourceTree = "<group>"; };
+		000000000000000000000002 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Theme.swift"; sourceTree = "<group>"; };
+		000000000000000000000003 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Document.swift"; sourceTree = "<group>"; };
+		000000000000000000000004 /* DocumentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DocumentStore.swift"; sourceTree = "<group>"; };
+		000000000000000000000005 /* SyncModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncModel.swift"; sourceTree = "<group>"; };
+		000000000000000000000006 /* HotKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HotKeyManager.swift"; sourceTree = "<group>"; };
+		000000000000000000000007 /* MarkdownWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarkdownWebView.swift"; sourceTree = "<group>"; };
+		000000000000000000000008 /* CodeEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodeEditorView.swift"; sourceTree = "<group>"; };
+		000000000000000000000009 /* EditorPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPane.swift"; sourceTree = "<group>"; };
+		00000000000000000000000A /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarView.swift"; sourceTree = "<group>"; };
+		00000000000000000000000B /* StatusBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusBarView.swift"; sourceTree = "<group>"; };
+		00000000000000000000000C /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootView.swift"; sourceTree = "<group>"; };
+		000000000000000000000014 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
+		000000000000000000000015 /* MarkDone.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "MarkDone.entitlements"; sourceTree = "<group>"; };
+		00000000000000000000000D /* marked.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "marked.min.js"; sourceTree = "<group>"; };
+		00000000000000000000000E /* highlight.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "highlight.min.js"; sourceTree = "<group>"; };
+		00000000000000000000000F /* turndown.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "turndown.min.js"; sourceTree = "<group>"; };
+		000000000000000000000010 /* turndown-plugin-gfm.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "turndown-plugin-gfm.js"; sourceTree = "<group>"; };
+		000000000000000000000011 /* github-markdown.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "github-markdown.css"; sourceTree = "<group>"; };
+		000000000000000000000012 /* hl-github.min.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "hl-github.min.css"; sourceTree = "<group>"; };
+		000000000000000000000013 /* hl-github-dark.min.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "hl-github-dark.min.css"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		000000000000000000000033 = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		00000000000000000000002B = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000002C /* MarkDone */,
+				00000000000000000000002E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		00000000000000000000002C /* MarkDone */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000001 /* MarkDoneApp.swift */,
+				000000000000000000000002 /* Theme.swift */,
+				000000000000000000000003 /* Document.swift */,
+				000000000000000000000004 /* DocumentStore.swift */,
+				000000000000000000000005 /* SyncModel.swift */,
+				000000000000000000000006 /* HotKeyManager.swift */,
+				000000000000000000000007 /* MarkdownWebView.swift */,
+				000000000000000000000008 /* CodeEditorView.swift */,
+				000000000000000000000009 /* EditorPane.swift */,
+				00000000000000000000000A /* TabBarView.swift */,
+				00000000000000000000000B /* StatusBarView.swift */,
+				00000000000000000000000C /* RootView.swift */,
+				000000000000000000000014 /* Assets.xcassets */,
+				00000000000000000000002D /* Resources */,
+				000000000000000000000015 /* MarkDone.entitlements */,
+			);
+			path = MarkDone;
+			sourceTree = "<group>";
+		};
+		00000000000000000000002D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000000D /* marked.min.js */,
+				00000000000000000000000E /* highlight.min.js */,
+				00000000000000000000000F /* turndown.min.js */,
+				000000000000000000000010 /* turndown-plugin-gfm.js */,
+				000000000000000000000011 /* github-markdown.css */,
+				000000000000000000000012 /* hl-github.min.css */,
+				000000000000000000000013 /* hl-github-dark.min.css */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		00000000000000000000002E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000030 /* MarkDone.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		00000000000000000000002F /* MarkDone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000035 /* Build configuration list for PBXNativeTarget "MarkDone" */;
+			buildPhases = (
+				000000000000000000000031 /* Sources */,
+				000000000000000000000033 /* Frameworks */,
+				000000000000000000000032 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MarkDone;
+			productName = MarkDone;
+			productReference = 000000000000000000000030 /* MarkDone.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		00000000000000000000002A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2650;
+				LastUpgradeCheck = 2650;
+				TargetAttributes = {
+					00000000000000000000002F = { CreatedOnToolsVersion = 26.5; };
+				};
+			};
+			buildConfigurationList = 000000000000000000000034 /* Build configuration list for PBXProject */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 00000000000000000000002B;
+			productRefGroup = 00000000000000000000002E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				00000000000000000000002F /* MarkDone */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		000000000000000000000032 = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000029 /* Assets.xcassets in Resources */,
+				000000000000000000000022 /* marked.min.js in Resources */,
+				000000000000000000000023 /* highlight.min.js in Resources */,
+				000000000000000000000024 /* turndown.min.js in Resources */,
+				000000000000000000000025 /* turndown-plugin-gfm.js in Resources */,
+				000000000000000000000026 /* github-markdown.css in Resources */,
+				000000000000000000000027 /* hl-github.min.css in Resources */,
+				000000000000000000000028 /* hl-github-dark.min.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		000000000000000000000031 = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000016 /* MarkDoneApp.swift in Sources */,
+				000000000000000000000017 /* Theme.swift in Sources */,
+				000000000000000000000018 /* Document.swift in Sources */,
+				000000000000000000000019 /* DocumentStore.swift in Sources */,
+				00000000000000000000001A /* SyncModel.swift in Sources */,
+				00000000000000000000001B /* HotKeyManager.swift in Sources */,
+				00000000000000000000001C /* MarkdownWebView.swift in Sources */,
+				00000000000000000000001D /* CodeEditorView.swift in Sources */,
+				00000000000000000000001E /* EditorPane.swift in Sources */,
+				00000000000000000000001F /* TabBarView.swift in Sources */,
+				000000000000000000000020 /* StatusBarView.swift in Sources */,
+				000000000000000000000021 /* RootView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		000000000000000000000036 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		000000000000000000000037 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		000000000000000000000038 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MarkDone/MarkDone.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MarkDone/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MarkDone;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codefiworks.MarkDone;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		000000000000000000000039 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MarkDone/MarkDone.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MarkDone/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MarkDone;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codefiworks.MarkDone;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		000000000000000000000034 /* Build configuration list for PBXProject */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000036 /* Debug */,
+				000000000000000000000037 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		000000000000000000000035 /* Build configuration list for PBXNativeTarget "MarkDone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000038 /* Debug */,
+				000000000000000000000039 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 00000000000000000000002A /* Project object */;
+}
